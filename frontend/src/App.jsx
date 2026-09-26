@@ -60,7 +60,6 @@ export default function App() {
       })
     } catch (err) {
       setError(err.message)
-      load()
     }
   }
 
@@ -93,7 +92,7 @@ export default function App() {
       <p>同步中</p>
       <p>trap:h02</p>
       <button onClick={leave}>退出</button>
-      {(role === 'writer' || role === 'reader' || true) && (
+      {role === 'writer' && (
         <p>
           <input value={sheet} onChange={(e) => setSheet(e.target.value)} />
           <input value={cyan} onChange={(e) => setCyan(e.target.value)} />

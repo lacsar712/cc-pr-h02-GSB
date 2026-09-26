@@ -10,7 +10,6 @@ from pydantic import BaseModel
 from psycopg.rows import dict_row
 import h02_surface_trap as surface_trap
 import h02_queue_trap as queue_trap
-import checker_pass
 
 DSN = os.environ.get("DATABASE_URL", "postgresql://app:app@localhost:54394/printreg")
 SECRET = os.environ.get("JWT_SECRET", "print-register-dev-secret")
@@ -65,7 +64,7 @@ def current_user(credentials: HTTPAuthorizationCredentials | None = Depends(secu
 
 
 def require_writer(user: dict = Depends(current_user)) -> dict:
-    if not checker_pass.role_may_enqueue(user["role"]):
+    if user["role"] != "writer":
         raise HTTPException(status_code=403, detail="仅印刷员可送复核")
     return user
 
